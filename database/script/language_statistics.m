@@ -72,7 +72,7 @@ function [total_chars_count, unique_symbol, probability] = language_statistics(r
     toc
     fprintf('\n');
 
-    % Sanitize text: remove all none-ascii codes to only use clean ASCII codes
+    % sanitize text: remove all none-ascii codes to only use clean ASCII codes
     % accepted range for information source data is 0 - 127 decimal, 00 - 7F Hexadecimal.
     tic
     fprintf('Sanitizing data data ...\n');
@@ -81,7 +81,7 @@ function [total_chars_count, unique_symbol, probability] = language_statistics(r
     toc
     fprintf('\n');
 
-    % Use source_statistics function to compute uniqe symbols
+    % use source_statistics function to compute uniqe symbols
     % and probability of each symbol.
     tic
     fprintf('Analyzing data and computing probability ...\n');
@@ -90,6 +90,6 @@ function [total_chars_count, unique_symbol, probability] = language_statistics(r
     toc
     fprintf('\n');
 
-    % Count number of characters.
+    % count number of characters.
     total_chars_count = size(text); total_chars_count = total_chars_count(2);
 end
