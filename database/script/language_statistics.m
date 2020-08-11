@@ -45,8 +45,8 @@ function [total_chars_count, unique_symbol, probability] = language_statistics(r
     %
     % OUTPUT:
     %   total_chars_count   = total number of characters analyzed.
-    %   unique_symbol       = string of unique symbols
-    %   probability         = probability of each unique symbols
+    %   unique_symbol       = string of unique symbols.
+    %   probability         = probability of each unique symbols.
 
     file_list = get_all_files(reference_directory);
 

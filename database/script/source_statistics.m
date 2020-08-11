@@ -41,10 +41,10 @@
 
 function [unique_symbol, probability] = source_statistics(text)
     % INPUT:
-    %   text            = input text data string
+    %   text            = input text data string.
     % OUTPUT:
-    %   unique_symbol   = string of unique symbols
-    %   probability     = probability of each unique symbols
+    %   unique_symbol   = string of unique symbols.
+    %   probability     = probability of each unique symbols.
 
     % get the unique symbols in the text.
     unique_symbol = unique(text);
@@ -55,10 +55,10 @@ function [unique_symbol, probability] = source_statistics(text)
     % count each symbol.
     count_symbol = histcounts(index, 1:length(unique_symbol) + 1);
 
-    % calculating each symbol probability
+    % calculating each symbol probability.
     probability = count_symbol / length(text);
 
-    % sorting probability in descending order
+    % sorting probability in descending order.
     [probability, index] = sort(probability, 'descend');
     unique_symbol = unique_symbol(index);
 end
