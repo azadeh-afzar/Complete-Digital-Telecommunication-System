@@ -1,7 +1,7 @@
-% database/language_statistics.m
+% database/script/language_statistics.m
 %
 % This file is a part of:
-% Azadeh Afzar - Complete Telecommunication System.
+% Azadeh Afzar - Complete Digital Telecommunication System.
 %
 % Copyright (C) 2020 Azadeh Afzar
 % Copyright (C) 2020 Mohammad Mahdi Baghbani Pourvahid
@@ -39,23 +39,33 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function language_statistics(reference_directory, database_file_path)
+function [total_chars_count, unique_symbol, probability] = language_statistics(reference_directory)
     % INPUT:
-    %   text = input text data string
+    %   reference_directory = path to the directory of language reference text data.
+    %
     % OUTPUT:
-    %   unique_symbol = string of unique symbols
-    %   probability = probability of each unique symbols
+    %   total_chars_count   = total number of characters analyzed.
+    %   unique_symbol       = string of unique symbols
+    %   probability         = probability of each unique symbols
 
     file_list = get_all_files(reference_directory);
 
     tic
     fprintf('Reading labguage reference books data ...\n');
+
+    % variable to hold all the data.
     text = char();
 
     for index = 1:numel(file_list)
-        file = fopen(file_list{index}, 'r');
-        text = append(text, '\n', fread(file, '*char')');
-        fclose(file);
+        current_file = file_list{index};
+        [~, ~, extension] = fileparts(current_file);
+        % only read text files, ignore all other type of files.
+        if strcmp(extension, char('.txt'))
+            file = fopen(current_file, 'r');
+            text = append(text, '\n', fread(file, '*char')');
+            fclose(file);
+        end
+
     end
 
     fprintf('Done.\n');
@@ -71,6 +81,8 @@ function language_statistics(reference_directory, database_file_path)
     toc
     fprintf('\n');
 
+    % Use source_statistics function to compute uniqe symbols
+    % and probability of each symbol.
     tic
     fprintf('Analyzing data and computing probability ...\n');
     [unique_symbol, probability] = source_statistics(text);
@@ -78,9 +90,6 @@ function language_statistics(reference_directory, database_file_path)
     toc
     fprintf('\n');
 
+    % Count number of characters.
     total_chars_count = size(text); total_chars_count = total_chars_count(2);
-
-    disp(total_chars_count)
-
-    save(database_file_path, 'total_chars_count', 'unique_symbol', 'probability');
 end
