@@ -1,7 +1,7 @@
-% database/source_statistics.m
+% database/script/source_statistics.m
 %
 % This file is a part of:
-% Azadeh Afzar - Complete Telecommunication System.
+% Azadeh Afzar - Complete Digital Telecommunication System.
 %
 % Copyright (C) 2020 Azadeh Afzar
 % Copyright (C) 2020 Mohammad Mahdi Baghbani Pourvahid
@@ -41,13 +41,19 @@
 
 function [unique_symbol, probability] = source_statistics(text)
     % INPUT:
-    %   text = input text data string
+    %   text            = input text data string
     % OUTPUT:
-    %   unique_symbol = string of unique symbols
-    %   probability = probability of each unique symbols
+    %   unique_symbol   = string of unique symbols
+    %   probability     = probability of each unique symbols
 
+    % get the unique symbols in the text.
     unique_symbol = unique(text);
-    count_symbol = histc(text, unique_symbol);
+
+    % get the indexes of each uniqe symbol in the text.
+    [~, index] = ismember(text, unique);
+
+    % count each symbol.
+    count_symbol = histcounts(index, 1:length(unique_symbol) + 1);
 
     % calculating each symbol probability
     probability = count_symbol / length(text);
