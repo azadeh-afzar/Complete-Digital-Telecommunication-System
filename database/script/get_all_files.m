@@ -1,7 +1,7 @@
-% database/get_all_files.m
+% database/script/get_all_files.m
 %
 % This file is a part of:
-% Azadeh Afzar - Complete Telecommunication System.
+% Azadeh Afzar - Complete Digital Telecommunication System.
 %
 % Copyright (C) 2020 Azadeh Afzar
 % Copyright (C) 2020 Mohammad Mahdi Baghbani Pourvahid
@@ -41,9 +41,9 @@
 
 function file_list = get_all_files(directory_name)
     % INPUT:
-    %   directory_name = path to the desired directory.
+    %   directory_name  = path to the desired directory.
     % OUTPUT:
-    %   file_list = list of files in that directory.
+    %   file_list       = list of files in that directory.
 
     directory_data = dir(directory_name);                   % Get data of assets/books directory.
     directory_index = [directory_data.isdir];               % Find index of subdirectories.
@@ -59,10 +59,10 @@ function file_list = get_all_files(directory_name)
     sub_directories = { directory_data(directory_index).name };
     valid_index = ~ismember(sub_directories, {'.', '..'});
 
-    % clean file_list.
+    % recursively read all file names in sub directories.
     for directory = find(valid_index)
         next_directory = fullfile(directory_name, sub_directories{directory});
-        file_list = [file_list; getAllFiles(next_directory)];
+        file_list = [file_list; get_all_files(next_directory)];
     end
 
 end
