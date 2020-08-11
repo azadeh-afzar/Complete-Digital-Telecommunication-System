@@ -42,5 +42,5 @@
 clear;
 clc;
 
-language_statistics('../asset/books/English', 'English-Database.mat');
+language_statistics('../../asset/language references/English', '../English-Database.mat');
 
