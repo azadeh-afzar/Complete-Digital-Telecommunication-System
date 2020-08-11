@@ -1,7 +1,7 @@
-% database/database_main.m
+% database/script/database_main.m
 %
 % This file is a part of:
-% Azadeh Afzar - Complete Telecommunication System.
+% Azadeh Afzar - Complete Digital Telecommunication System.
 %
 % Copyright (C) 2020 Azadeh Afzar
 % Copyright (C) 2020 Mohammad Mahdi Baghbani Pourvahid
@@ -42,5 +42,15 @@
 clear;
 clc;
 
-language_statistics('../../asset/language references/English', '../English-Database.mat');
+% define paths.
+DATA_PATH = '../../asset/language references/English';
+DATABASE = '../English_Code_Word.mat';
 
+% get language symbol frequency statistics.
+[total_chars_count, unique_symbol, probability] = language_statistics(DATA_PATH);
+
+% generate code worr for symbols based on the probability of each symbol.
+code_word = huffman_encoding(probability);
+
+% save data in database.
+save(DATABASE, 'total_chars_count', 'unique_symbol', 'probability', 'code_word')

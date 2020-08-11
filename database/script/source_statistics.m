@@ -50,7 +50,7 @@ function [unique_symbol, probability] = source_statistics(text)
     unique_symbol = unique(text);
 
     % get the indexes of each uniqe symbol in the text.
-    [~, index] = ismember(text, unique);
+    [~, index] = ismember(text, unique_symbol);
 
     % count each symbol.
     count_symbol = histcounts(index, 1:length(unique_symbol) + 1);
