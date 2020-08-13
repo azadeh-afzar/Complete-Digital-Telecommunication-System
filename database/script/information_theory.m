@@ -1,4 +1,4 @@
-% database/script/database_main.m
+% database/script/information_theory.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -39,22 +39,22 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-clear;
-clc;
+function [information_I, antropy_Hx, ...
+          code_word_Ni, code_word_average_len_N, ...
+          keraft_K] = information_theory(probability, code_word)
 
-% define paths.
-DATA_PATH = '../../asset/language references/English';
-DATABASE = '../English_Code_Word.mat';
+    information_I = log2(1 ./ probability);
+    antropy_Hx = sum(probability .* information_I);
+    
+    len = length(code_word);
+    code_word_Ni = zeros(1, len);
+    
+    for i = 1:len
+        code_word_Ni(1, i) = length(code_word{i});
+    end
 
-% get language symbol frequency statistics.
-[total_chars_count, unique_symbol, probability] = language_statistics(DATA_PATH);
-
-% generate code worr for symbols based on the probability of each symbol.
-code_word = huffman_encoding(probability);
-
-[information_I, antropy_Hx, code_word_Ni, ...
-code_word_average_len_N, keraft_K ...
-] = information_theory(probability, code_word);
-
-% save data in database.
-save(DATABASE, 'total_chars_count', 'unique_symbol', 'probability', 'code_word')
+    code_word_average_len_N = sum(probability .* code_word_Ni);
+    
+    keraft_K = sum(2 .^ - code_word_Ni);
+        
+     
