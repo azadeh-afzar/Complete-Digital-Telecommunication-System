@@ -60,5 +60,7 @@ function [unique_symbol, probability] = source_statistics(text)
 
     % sorting probability in descending order.
     [probability, index] = sort(probability, 'descend');
+    
+    % syncing unique symbols to the sorted probabilily array.
     unique_symbol = unique_symbol(index);
 end

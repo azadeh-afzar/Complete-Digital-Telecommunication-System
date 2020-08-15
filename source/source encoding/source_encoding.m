@@ -1,4 +1,4 @@
-% database/script/database_main.m
+% database/script/source_encoding.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -47,14 +47,15 @@ DATA_PATH = '../../asset/language references/English';
 DATABASE = '../English_Code_Word.mat';
 
 % get language symbol frequency statistics.
-[total_chars_count, unique_symbol, probability] = language_statistics(DATA_PATH);
+[total_chars_count, unique_symbol, ...
+        probability] = language_statistics(DATA_PATH);
 
 % generate code worr for symbols based on the probability of each symbol.
 code_word = huffman_encoding(probability);
 
-[information_I, antropy_Hx, code_word_Ni, ...
-code_word_average_len_N, keraft_K ...
-] = information_theory(probability, code_word);
+[I, Hx, Ni, N, K] = information_theory(probability, code_word);
 
 % save data in database.
-save(DATABASE, 'total_chars_count', 'unique_symbol', 'probability', 'code_word')
+save(DATABASE, 'total_chars_count', 'unique_symbol', 'probability', ...
+    'code_word', 'information_I', 'antropy_Hx', 'code_word_Ni', ...
+    'code_word_average_len_N', 'keraft_K')

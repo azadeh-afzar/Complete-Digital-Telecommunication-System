@@ -90,6 +90,6 @@ function [total_chars_count, unique_symbol, probability] = language_statistics(r
     toc
     fprintf('\n');
 
-    % count number of characters.
+    % count number of analayzed characters.
     total_chars_count = size(text); total_chars_count = total_chars_count(2);
 end

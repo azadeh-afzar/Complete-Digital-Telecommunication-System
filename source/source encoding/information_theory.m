@@ -39,22 +39,25 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function [information_I, antropy_Hx, ...
-          code_word_Ni, code_word_average_len_N, ...
-          keraft_K] = information_theory(probability, code_word)
+function [I, Hx, Ni, N, K] = information_theory(probability, code_word)
 
-    information_I = log2(1 ./ probability);
-    antropy_Hx = sum(probability .* information_I);
-    
+    % claculate information per symbol in bits.
+    I = log2(1 ./ probability);
+
+    % calculate information source antropy;
+    Hx = sum(probability .* I);
+
+    % get code word length of each symbol.
     len = length(code_word);
-    code_word_Ni = zeros(1, len);
-    
+    Ni = zeros(1, len);
+
     for i = 1:len
-        code_word_Ni(1, i) = length(code_word{i});
+        Ni(1, i) = length(code_word{i});
     end
 
-    code_word_average_len_N = sum(probability .* code_word_Ni);
-    
-    keraft_K = sum(2 .^ - code_word_Ni);
-        
-     
+    % calculate average code word length.
+    N = sum(probability .* Ni);
+
+    % calculate Kraft threshold.
+    K = sum(2.^ - Ni);
+end
