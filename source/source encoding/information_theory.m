@@ -1,4 +1,4 @@
-% database/script/information_theory.m
+% source/source encoding/information_theory.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.

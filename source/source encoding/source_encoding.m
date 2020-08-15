@@ -1,4 +1,4 @@
-% database/script/source_encoding.m
+% source/source encoding/source_encoding.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
