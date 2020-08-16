@@ -40,6 +40,14 @@
 %
 
 function line_code = encode_4B3T(bit_stream, amplitude)
+    % INPUT:
+    %   line_mode       = encode or decode mode switch.
+    %   line_code_name  = name of line coding algorithm.
+    %   stream          = source stream to be line coded.
+    %   amplitude       = magnitude levels for high, zero and low.
+    % OUTPUT:
+    %   signal          = line coded stream.
+
     % set accumulated DC offset starting from 1.
     dc_offset = 1;
 

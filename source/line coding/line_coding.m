@@ -39,7 +39,15 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function signal = line_coding(line_code_name, line_mode, stream, amplitude)
+function signal = line_coding(line_mode, line_code_name, stream, amplitude)
+    % INPUT:
+    %   line_mode       = encode or decode mode switch.
+    %   line_code_name  = name of line coding algorithm.
+    %   stream          = source stream to be line coded.
+    %   amplitude       = magnitude levels for high, zero and low.
+    % OUTPUT:
+    %   signal          = line coded stream.
+
     % add subfolders to matlab file path.
     addpath(genpath('.'));
 
