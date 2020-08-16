@@ -39,23 +39,29 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-clear;
-clc;
+function source_encoding(data_dir_path, database_file_path)
+    % INPUT:
+    %   data_dir_path       = path to the directory of language reference text data.
+    %   database_file_path  = path to a database file to save results.
+    %
+    % OUTPUT:
+    %   a database .m file that can be loaded into other matlab programs and provide
+    %   them with 'total_chars_count', 'unique_symbol', 'probability', 'code_word',
+    %   'I', 'Hx', 'Ni', 'N', 'K' variables.
+    %    
 
-% define paths.
-DATA_PATH = '../../asset/language references/English';
-DATABASE = '../../database/English.mat';
+    % get language symbol frequency statistics.
+    [total_chars_count, unique_symbol, ...
+            probability] = language_statistics(data_dir_path);
 
-% get language symbol frequency statistics.
-[total_chars_count, unique_symbol, ...
-        probability] = language_statistics(DATA_PATH);
+    % generate code worr for symbols based on the probability of each symbol.
+    code_word = huffman_encoding(probability);
 
-% generate code worr for symbols based on the probability of each symbol.
-code_word = huffman_encoding(probability);
+    % get information theory values for this information source.
+    [I, Hx, Ni, N, K] = information_theory(probability, code_word);
 
-% get information theory values for this information source.
-[I, Hx, Ni, N, K] = information_theory(probability, code_word);
+    % save data in database.
+    save(database_file_path, 'total_chars_count', 'unique_symbol', 'probability', 'code_word', ...
+        'I', 'Hx', 'Ni', 'N', 'K')
 
-% save data in database.
-save(DATABASE, 'total_chars_count', 'unique_symbol', 'probability', 'code_word', ...
-    'I', 'Hx', 'Ni', 'N', 'K')
+end
