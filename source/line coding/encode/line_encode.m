@@ -1,4 +1,4 @@
-% source/line coding/encode/encode.m
+% source/line coding/encode/line_encode.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
