@@ -59,6 +59,7 @@ function code_word = huffman_encoding(probability)
     x = zeros(symbol_count, symbol_count);
     x(:, 1) = (1:symbol_count)';
 
+    % construct huffman tree and generate code word for symbols.
     for i = 1:symbol_count - 1
         temp = probability;
         [~, min1] = min(temp);
@@ -80,6 +81,6 @@ function code_word = huffman_encoding(probability)
         end
 
     end
-
+    % sort code words in ascending length.
     code_word = fliplr(code_word);
 end
