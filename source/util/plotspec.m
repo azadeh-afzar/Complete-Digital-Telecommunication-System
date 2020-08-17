@@ -39,11 +39,14 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function plotspec(signal, ts, figure_num, option)
+function plotspec(signal, ts, figure_property, option)
     % plotspec(signal,ts) plots the spectrum of the signal
     % INPUT:
-    %   signal  = the signal for plotting it's frequency spectrum.
-    %   ts = time (in seconds) between adjacent samples in signal.
+    %   signal          = the signal for plotting it's frequency spectrum.
+    %   ts              = time (in seconds) between adjacent samples in signal.
+    %   figure_property = either figure name or figure number.
+    %   option          = an array to define options of figure [waveform,
+    %                     spectrums, phase, name];
     % OUTPUT:
     %   a plot consist 2 sub plots of waveform and frequency domain.
 
@@ -51,6 +54,7 @@ function plotspec(signal, ts, figure_num, option)
     waveform = option(1);
     spectrums = option(2);
     phase = option(3);
+    name_or_num = option(4);
 
     % num of plots.
     plot_n = sum(option);
@@ -68,27 +72,25 @@ function plotspec(signal, ts, figure_num, option)
     shifted_fft = fftshift(fft_signal);
     abs_shifted_fft = abs(shifted_fft);
 
-    % plot.
-    figure(figure_num);
+    % define figure plot.
+    if name_or_num == 1
+        figure('Name', figure_property, 'NumberTitle', 'off');
+    else
+        figure(figure_property);
+    end
 
     if waveform
-        % find max frequency.
-        index = find(shifted_fft == max(shifted_fft));
-        max_freq = frequencies(index);
-        max_t = 1 / max_freq;
-        % use the max T to adjust waveform to show 3 cycles.
-        cycles = 3;
-        max_time = max_t * cycles;
-        n_samples = round(max_time / ts);
-        time = linspace(0, max_time, n_samples);
+        time = ts * (1:n);
+        max_data_points = n;
+        % limit data points to show.
+        if n > 50
+            max_data_points = round(n / (log10(n) / log10(50)));
+        end
         % plot the waveform.
         subplot(plot_n, 1, 1);
-        stem(time, signal(1:n_samples), 'c');
-        hold on;
-        grid on;
-        plot(time, signal(1:n_samples), 'b')
+        plot(time(1:max_data_points), signal(1:max_data_points));
         % label the axes.
-        title('Waveform in 3 cycles');
+        title('Waveform');
         xlabel('seconds');
         ylabel('amplitude');
     end
