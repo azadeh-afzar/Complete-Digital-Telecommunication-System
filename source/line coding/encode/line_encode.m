@@ -42,7 +42,7 @@
 function line_code = line_encode(line_code_name, bit_stream, amplitude)
     % INPUT:
     %   line_code_name  = name of line coding algorithm.
-    %   stream          = source stream to be line coded.
+    %   bit_stream      = source stream to be line coded.
     %   amplitude       = magnitude levels for high, zero and low.
     % OUTPUT:
     %   signal          = line coded stream.
