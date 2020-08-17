@@ -48,6 +48,10 @@ function line_code = encode_4B3T(bit_stream, amplitude)
     % OUTPUT:
     %   signal          = line coded stream.
 
+    % to avoid any problems, multiply bits to 4, this reduces 
+    % Rb by 1/4 .
+    bit_stream = repelem(bit_stream, 4);
+
     % set accumulated DC offset starting from 1.
     dc_offset = 1;
 
@@ -57,7 +61,8 @@ function line_code = encode_4B3T(bit_stream, amplitude)
     low_a = amplitude(3);
 
     % empty line code to be filled with 4B3T algorithm.
-    % this transforms stream length with 4/3 multipication.
+    % this transforms stream length with 3/4 multipication.
+    % final Rb will be Rb/3 .
     stream_length = length(bit_stream);
     line_code = zeros(1, (stream_length / 4) * 3);
     line_index = 1;
