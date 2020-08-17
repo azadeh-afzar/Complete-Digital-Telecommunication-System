@@ -49,7 +49,7 @@ function line_code = line_encode(line_code_name, bit_stream, amplitude)
 
     switch line_code_name
         case '4B3T'
-            line_code = line_4B3T(bit_stream, amplitude);
+            line_code = encode_4B3T(bit_stream, amplitude);
         otherwise
             fprintf('\n');
             warning(['"', line_code_name, '" Line code is not supported! ONLY "4B3T" are supported.']);
