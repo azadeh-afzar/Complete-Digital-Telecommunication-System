@@ -83,9 +83,18 @@ function plotspec(signal, ts, figure_property, option)
         time = ts * (1:n);
         max_data_points = n;
         % limit data points to show.
-        if n > 50
+        if n > 50 && n <= 500
             max_data_points = round(n / (log10(n) / log10(50)));
+        elseif n > 500 && n <= 1000
+            max_data_points = round(n / (log10(n) / log10(9)));
+        elseif n > 1000 && n <= 2000
+            max_data_points = round(n / (log10(n) / log10(4)));
+        elseif n > 2000 && n <= 3000
+            max_data_points = round(n / (log10(n) / log10(2.5)));
+        elseif n > 3000
+            max_data_points = 400;
         end
+
         % plot the waveform.
         subplot(plot_n, 1, 1);
         plot(time(1:max_data_points), signal(1:max_data_points));
