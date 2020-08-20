@@ -53,9 +53,11 @@ function out_stream = channel_encode(channel_code_name, stream, option, g_matrix
             out_stream = encode_hamming(stream, option);
         case 'convolutional'
             out_stream = encode_convolutional(stream, g_matrix, option);
+        case 'interleaver'
+            out_stream = encode_interleaver(stream, g_matrix, option);
         otherwise
             fprintf('\n');
-            error(['"', channel_code_name, '" channel coding is not supported! ONLY "hamming", "convolutional" are supported.']);
+            error(['"', channel_code_name, '" channel coding is not supported! ONLY "hamming", "convolutional", "interleaver" are supported.']);
     end
 
 end

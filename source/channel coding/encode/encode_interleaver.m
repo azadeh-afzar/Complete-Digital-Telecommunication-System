@@ -1,4 +1,4 @@
-% source/channel coding/encode/channel_encode.m
+% source/channel coding/encode/encode_interleaver.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -39,26 +39,44 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function out_stream = channel_decode(channel_code_name, stream, option, g_matrix, shift)
+function out_stream = encode_interleaver(stream, g_vector, option)
     % INPUT:
-    %   channel_code_name = name of channel coding algorithm.
-    %   stream            = input stream.
+    %   stream            = input data stream.
+    %   g_vector          = index generator vector.
     %   option            = other algorithm specific options.
-    %   g_matrix          = generator matrix.
-    %   shift             = states shift.
     % OUTPUT:
-    %   out_stream        = decoded stream.
+    %   out_stream        = encoded data stream.
 
-    switch channel_code_name
-        case 'hamming'
-            out_stream = decode_hamming(stream, option);
-        case 'convolutional'
-            out_stream = decode_convolutional(stream, g_matrix, shift, option);
-        case 'interleaver'
-            out_stream = decode_interleaver(stream, g_matrix, option);
-        otherwise
-            fprintf('\n');
-            error(['"', channel_code_name, '" channel coding is not supported! ONLY "hamming", "convolutional", "interleaver" are supported.']);
+    % add subfolders to matlab file path.
+    addpath('../base/block codes');
+
+    % get options.
+    enable_first_upsampling = option(1);
+    enable_second_upsampling = option(2);
+    second_upsample_rate = option(3);
+
+    % get lengths.
+    length_g_vector = size(g_vector, 2);
+    length_stream = size(stream, 2);
+
+    % first auto upsampling by length generator vector.
+    if enable_first_upsampling == 1
+        stream = repelem(stream, length_g_vector);
+        % update stream length.
+        length_stream = size(stream, 2);
     end
 
+    % create zero filled scrambled data.
+    scrambled_data = zeros(1, length_stream);
+
+    for i = 1:length_g_vector:length_stream
+        index_vector = g_vector + i - 1;
+        scrambled_data(i:i + length_g_vector - 1) = stream(index_vector);
+    end
+
+    if enable_second_upsampling == 1 && second_upsample_rate > 0
+        scrambled_data = repelem(scrambled_data, second_upsample_rate);
+    end
+
+    out_stream = scrambled_data;
 end

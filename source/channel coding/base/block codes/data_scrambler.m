@@ -1,4 +1,4 @@
-% source/channel coding/encode/channel_encode.m
+% source/channel coding/base/block codes/data_scrambler.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -39,26 +39,35 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function out_stream = channel_decode(channel_code_name, stream, option, g_matrix, shift)
+function out_data_block = data_scrambler(data_block, g_vector)
     % INPUT:
-    %   channel_code_name = name of channel coding algorithm.
-    %   stream            = input stream.
-    %   option            = other algorithm specific options.
-    %   g_matrix          = generator matrix.
-    %   shift             = states shift.
+    %   data_block        = input data block.
+    %   g_vector          = index generator vector.
     % OUTPUT:
-    %   out_stream        = decoded stream.
+    %   out_block         = output data block.
 
-    switch channel_code_name
-        case 'hamming'
-            out_stream = decode_hamming(stream, option);
-        case 'convolutional'
-            out_stream = decode_convolutional(stream, g_matrix, shift, option);
-        case 'interleaver'
-            out_stream = decode_interleaver(stream, g_matrix, option);
-        otherwise
-            fprintf('\n');
-            error(['"', channel_code_name, '" channel coding is not supported! ONLY "hamming", "convolutional", "interleaver" are supported.']);
+    % determine block size for scrambling based on generator vector.
+    len_g_vector_block = size(g_vector, 2);
+    len_g_vector_uniqe = size(unique(g_vector));
+    max_index_g_vector = max(g_vector);
+    len_data_block = size(data_block, 2);
+
+    % do checks.
+    if len_data_block ~= len_g_vector_block
+        fprintf('\n');
+        error('data block length is not equal to generator vector length!');
     end
+
+    if len_g_vector_block ~= len_g_vector_uniqe
+        fprintf('\n');
+        error('generator vector must not have duplicate index');
+    end
+
+    if len_g_vector_block ~= max_index_g_vector
+        fprintf('\n');
+        error('generator vector does not have all indexes for this block size!');
+    end
+
+    out_data_block = data_block(g_vector);
 
 end
