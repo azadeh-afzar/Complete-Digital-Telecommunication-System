@@ -47,21 +47,21 @@ function out_stream = OTP(key, stream, option)
     % OUTPUT:
     %   out_stream      = out put stream.
 
-    stream_upsample = floor(option(1));
-    stream_downsample = floor(option(2));
+    stream_upsample_rate = floor(option(1));
+    stream_downsample_rate = floor(option(2));
     sampling_method = floor(option(3));
 
     % upsample stream or not.
-    if stream_upsample > 0
+    if stream_upsample_rate > 0
 
         if sampling_method == 1
             % upsample stream by adding zeros between symbols
-            % of stream for 'stream_upsample' - 1 times.
-            stream = upsample(stream, stream_upsample);
+            % of stream for 'stream_upsample_rate' - 1 times.
+            stream = upsample(stream, stream_upsample_rate);
         else
             % upsample stream by repeating each bit
-            % of stream by 'stream_upsample' times.
-            stream = repelem(stream, stream_upsample);
+            % of stream by 'stream_upsample_rate' times.
+            stream = repelem(stream, stream_upsample_rate);
 
         end
 
@@ -87,16 +87,16 @@ function out_stream = OTP(key, stream, option)
     mid_stream = double(xor(stream, otp));
 
     % upsample stream or not.
-    if stream_downsample > 0
+    if stream_downsample_rate > 0
 
         if sampling_method == 1
             % upsample stream by adding zeros between symbols
-            % of stream for 'stream_upsample' - 1 times.
-            out_stream = downsample(mid_stream, stream_downsample);
+            % of stream for 'stream_upsample_rate' - 1 times.
+            out_stream = downsample(mid_stream, stream_downsample_rate);
         else
             % upsample stream by repeating each bit
-            % of stream by 'stream_upsample' times.
-            mid_stream = reshape(mid_stream, stream_downsample, len_stream / stream_downsample);
+            % of stream by 'stream_upsample_rate' times.
+            mid_stream = reshape(mid_stream, stream_downsample_rate, len_stream / stream_downsample_rate);
             % select upper row.
             out_stream = mid_stream(1, :);
         end
