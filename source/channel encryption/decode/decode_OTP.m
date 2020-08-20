@@ -47,9 +47,6 @@ function out_stream = decode_OTP(key, stream, option)
     % OUTPUT:
     %   out_stream      = out put stream.
 
-    % add subfolders to matlab file path.
-    addpath('../base/stream ciphers');
-
     % use generic function.
     out_stream = OTP(key, stream, option);
 
