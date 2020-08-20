@@ -55,8 +55,7 @@ function out_stream = channel_encode(channel_code_name, stream, option, g_matrix
             out_stream = encode_convolutional(stream, g_matrix, option);
         otherwise
             fprintf('\n');
-            warning(['"', channel_code_name, '" channel coding is not supported! ONLY "hamming", "convolutional" are supported.']);
-            exit;
+            error(['"', channel_code_name, '" channel coding is not supported! ONLY "hamming", "convolutional" are supported.']);
     end
 
 end

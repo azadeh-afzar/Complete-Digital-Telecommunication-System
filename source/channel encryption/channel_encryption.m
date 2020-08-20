@@ -59,8 +59,7 @@ function out_stream = channel_encryption(encryption_mode, encryption_name, key, 
             out_stream = encryption_decode(encryption_name, key, stream, option);
         otherwise
             fprintf('\n');
-            warning(['"', encryption_mode, '" mode is not supported! ONLY "encode" and "decode" are supported.']);
-            return;
+            error(['"', encryption_mode, '" mode is not supported! ONLY "encode" and "decode" are supported.']);
     end
 
 end

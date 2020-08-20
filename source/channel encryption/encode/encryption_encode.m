@@ -53,8 +53,7 @@ function out_stream = encryption_encode(encryption_name, key, stream, option)
             out_stream = encode_OTP(key, stream, option);
         otherwise
             fprintf('\n');
-            warning(['"', encryption_name, '" encryption is not supported! ONLY "OTP" are supported.']);
-            return;
+            error(['"', encryption_name, '" encryption is not supported! ONLY "OTP" are supported.']);
     end
 
 end
