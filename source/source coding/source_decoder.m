@@ -1,4 +1,4 @@
-% source/source encoding/source_statistics.m
+% source/source encoding/source_decoder.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -39,28 +39,13 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function [unique_symbol, probability] = source_statistics(text)
+function decoded_msg = source_decoding(unique_symbol, code_word, bit_stream)
     % INPUT:
-    %   text            = input text data string.
+    %   unique_symbol: string of the unique symbols.
+    %   code_word: cell array of code to represent each probability of the symbols.
+    %   bit_stream: message bit stream that has to be decoded.
     % OUTPUT:
-    %   unique_symbol   = string of unique symbols.
-    %   probability     = probability of each unique symbols.
+    %   decoded_msg = decoded message.
 
-    % get the unique symbols in the text.
-    unique_symbol = unique(text);
-
-    % get the indexes of each uniqe symbol in the text.
-    [~, index] = ismember(text, unique_symbol);
-
-    % count each symbol.
-    count_symbol = histcounts(index, 1:length(unique_symbol) + 1);
-
-    % calculating each symbol probability.
-    probability = count_symbol / length(text);
-
-    % sorting probability in descending order.
-    [probability, index] = sort(probability, 'descend');
-    
-    % syncing unique symbols to the sorted probabilily array.
-    unique_symbol = unique_symbol(index);
+    decoded_msg = huffman_decoding(unique_symbol, code_word, bit_stream);
 end

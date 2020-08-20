@@ -1,4 +1,4 @@
-% source/source encoding/language_statistics.m
+% source/source encoding/base/language_statistics.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.

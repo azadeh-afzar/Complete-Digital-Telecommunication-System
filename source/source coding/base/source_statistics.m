@@ -1,4 +1,4 @@
-% source/source encoding/source_encoding.m
+% source/source encoding/base/source_statistics.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -39,29 +39,28 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function source_encoding(data_dir_path, database_file_path)
+function [unique_symbol, probability] = source_statistics(text)
     % INPUT:
-    %   data_dir_path       = path to the directory of language reference text data.
-    %   database_file_path  = path to a database file to save results.
-    %
+    %   text            = input text data string.
     % OUTPUT:
-    %   a database .m file that can be loaded into other matlab programs and provide
-    %   them with 'total_chars_count', 'unique_symbol', 'probability', 'code_word',
-    %   'I', 'Hx', 'Ni', 'N', 'K' variables.
-    %    
+    %   unique_symbol   = string of unique symbols.
+    %   probability     = probability of each unique symbols.
 
-    % get language symbol frequency statistics.
-    [total_chars_count, unique_symbol, ...
-            probability] = language_statistics(data_dir_path);
+    % get the unique symbols in the text.
+    unique_symbol = unique(text);
 
-    % generate code worr for symbols based on the probability of each symbol.
-    code_word = huffman_encoding(probability);
+    % get the indexes of each uniqe symbol in the text.
+    [~, index] = ismember(text, unique_symbol);
 
-    % get information theory values for this information source.
-    [I, Hx, Ni, N, K] = information_theory(probability, code_word);
+    % count each symbol.
+    count_symbol = histcounts(index, 1:length(unique_symbol) + 1);
 
-    % save data in database.
-    save(database_file_path, 'total_chars_count', 'unique_symbol', 'probability', 'code_word', ...
-        'I', 'Hx', 'Ni', 'N', 'K')
+    % calculating each symbol probability.
+    probability = count_symbol / length(text);
 
+    % sorting probability in descending order.
+    [probability, index] = sort(probability, 'descend');
+    
+    % syncing unique symbols to the sorted probabilily array.
+    unique_symbol = unique_symbol(index);
 end

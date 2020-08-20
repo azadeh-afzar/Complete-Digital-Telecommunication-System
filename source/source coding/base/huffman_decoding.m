@@ -1,4 +1,4 @@
-% source/source encoding/huffman_decoding.m
+% source/source encoding/base/huffman_decoding.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.

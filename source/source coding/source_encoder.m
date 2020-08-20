@@ -1,4 +1,4 @@
-% source/source encoding/get_all_files.m
+% source/source encoding/source encoder.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -39,30 +39,24 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function file_list = get_all_files(directory_name)
+function bit_stream = source_encoding(unique_symbol, code_word, msg)
     % INPUT:
-    %   directory_name  = path to the desired directory.
+    %   unique_symbol = a string of unique symbols
+    %   code_word = cell array of code to represent each probability of the symbols
     % OUTPUT:
-    %   file_list       = list of files in that directory.
+    %   msg = message that has to be converted into bit stream
 
-    directory_data = dir(directory_name);                   % Get data of assets/books directory.
-    directory_index = [directory_data.isdir];               % Find index of subdirectories.
-    file_list = {directory_data(~directory_index).name}';   % Get list of files.
+    % add subfolders to matlab file path.
+    addpath(genpath('.'));
 
-    % append path to filenames.
-    if ~isempty(file_list)
-        file_list = cellfun(@(file) fullfile(directory_name, file), ...
-            file_list, 'UniformOutput', false);
+    bit_stream = '';
+    increment = length(char(unique_symbol(1)));
+
+    for i = 1:increment:length(msg)
+        index = strfind(unique_symbol, msg(i:i + increment - 1));
+        bit_stream = [bit_stream char(code_word(index))];
     end
 
-    % specify valid subdirectories. (filter out . and .. dirs).
-    sub_directories = { directory_data(directory_index).name };
-    valid_index = ~ismember(sub_directories, {'.', '..'});
-
-    % recursively read all file names in sub directories.
-    for directory = find(valid_index)
-        next_directory = fullfile(directory_name, sub_directories{directory});
-        file_list = [file_list; get_all_files(next_directory)];
-    end
-
+    % converting string bit stream to double vector array
+    bit_stream = double(bit_stream - double('0'));
 end
