@@ -47,9 +47,6 @@ function out_stream = decode_interleaver(stream, g_vector, option)
     % OUTPUT:
     %   out_stream        = decoded data stream.
 
-    % add subfolders to matlab file path.
-    addpath('../base/block codes');
-
     % get options.
     enable_second_downsampling = option(1);
     enable_first_downsampling = option(2);

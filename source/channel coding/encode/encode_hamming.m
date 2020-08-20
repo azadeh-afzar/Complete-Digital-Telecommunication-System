@@ -46,9 +46,6 @@ function out_stream = encode_hamming(stream, option)
     % OUTPUT:
     %   out_stream        = encoded data stream.
 
-    % add subfolders to matlab file path.
-    addpath('../base/block codes/hamming');
-
     % get options.
     hamming_distance = option(1);
     stream_upsample_rate = floor(option(2));

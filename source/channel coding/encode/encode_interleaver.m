@@ -47,9 +47,6 @@ function out_stream = encode_interleaver(stream, g_vector, option)
     % OUTPUT:
     %   out_stream        = encoded data stream.
 
-    % add subfolders to matlab file path.
-    addpath('../base/block codes');
-
     % get options.
     enable_first_upsampling = option(1);
     enable_second_upsampling = option(2);

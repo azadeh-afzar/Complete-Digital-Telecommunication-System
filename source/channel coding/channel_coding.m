@@ -55,9 +55,9 @@ function out_stream = channel_coding(channel_code_mode, channel_code_name, strea
 
     switch channel_code_mode
         case 'encode'
-            out_stream = channel_encode(channel_code_name, key, stream, option, g_matrix);
+            out_stream = channel_encode(channel_code_name, stream, option, g_matrix);
         case 'decode'
-            out_stream = channel_decode(channel_code_name, key, stream, option, g_matrix, shift);
+            out_stream = channel_decode(channel_code_name, stream, option, g_matrix, shift);
         otherwise
             fprintf('\n');
             error(['"', channel_code_mode, '" mode is not supported! ONLY "encode" and "decode" are supported.']);
