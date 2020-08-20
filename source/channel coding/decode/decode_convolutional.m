@@ -40,8 +40,9 @@
 %
 
 function out_stream = decode_convolutional(stream, g_matrix, shift, option)
+    % Viterbi algorithm to decode convolutional codes.
     % INPUT:
-    %   stream          = uncoded bit stream vector.
+    %   stream          = coded bit stream vector.
     %   g_matrix        = generator matrix.
     %   shift           = states shift.
     %   option          = other algorithm specific options.
