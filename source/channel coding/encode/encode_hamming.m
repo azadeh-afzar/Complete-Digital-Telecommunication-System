@@ -66,14 +66,14 @@ function out_stream = encode_hamming(stream, option)
     end
 
     % get length of up sampled data stream.
-    len_up_block = length(stream_upsampled);
+    len_upsampled_stream = length(stream_upsampled);
 
     % create empty ecncoded data.
-    encoded_data_size = len_up_block / input_data_block_size * output_data_block_size;
+    encoded_data_size = (len_upsampled_stream / input_data_block_size) * output_data_block_size;
     encoded_data = zeros(1, encoded_data_size);
     encoded_data_index = 1;
 
-    for i = 1:input_data_block_size:len_up_block
+    for i = 1:input_data_block_size:len_upsampled_stream
         next_index = encoded_data_index + output_data_block_size;
         encoded_data(encoded_data_index:next_index - 1) = hm_encoder(stream_upsampled(i:i + input_data_block_size - 1), hamming_distance);
         encoded_data_index = next_index;

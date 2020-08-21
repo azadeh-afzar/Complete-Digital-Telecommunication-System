@@ -58,7 +58,7 @@ function out_stream = decode_hamming(stream, option)
     len_data_stream = length(stream);
 
     % create empty ecncoded data.
-    decoded_data_size = len_data_stream / input_data_block_size * output_data_block_size;
+    decoded_data_size = (len_data_stream / input_data_block_size) * output_data_block_size;
     decoded_data = zeros(1, decoded_data_size);
     decoded_data_index = 1;
 
