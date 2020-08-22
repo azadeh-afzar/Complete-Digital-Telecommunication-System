@@ -48,20 +48,23 @@ function out_stream = encode_hamming(stream, option)
 
     % get options.
     hamming_distance = option(1);
-    stream_upsample_rate = floor(option(2));
+    enable_block_size_upsample = option(2);
+    second_upsample_rate = floor(option(3));
 
     % get message block size.
     output_data_block_size = (2^hamming_distance) - 1;
     input_data_block_size = output_data_block_size - hamming_distance;
 
-    % upsample data stream to be divisible by block size.
-    stream_upsampled = repelem(stream, input_data_block_size);
+    % upsample by hamming block size to avoid unmatched lengths.
+    if enable_block_size_upsample > 0
+        stream_upsampled = repelem(stream, input_data_block_size);
+    end
 
     % manually upsample stream or not.
-    if stream_upsample_rate > 0
+    if second_upsample_rate > 0
         % upsample data stream by repeating each bit
-        % of data stream by 'stream_upsample_rate' times.
-        stream_upsampled = repelem(stream_upsampled, stream_upsample_rate);
+        % of data stream by 'second_upsample_rate' times.
+        stream_upsampled = repelem(stream_upsampled, second_upsample_rate);
 
     end
 

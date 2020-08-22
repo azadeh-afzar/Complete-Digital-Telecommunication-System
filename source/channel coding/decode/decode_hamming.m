@@ -48,7 +48,8 @@ function out_stream = decode_hamming(stream, option)
 
     % get options.
     hamming_distance = option(1);
-    stream_downsample_rate = floor(option(2));
+    enable_block_size_downsample = option(2);
+    second_downsample_rate = floor(option(3));
 
     % get message block size.
     input_data_block_size = (2^hamming_distance) - 1;
@@ -69,18 +70,21 @@ function out_stream = decode_hamming(stream, option)
     end
 
     % manually downsample stream or not.
-    if stream_downsample_rate > 0
+    if second_downsample_rate > 0
         % downsample.
-        stream_downsampled = reshape(decoded_data, stream_downsample_rate, length(decoded_data) / stream_downsample_rate);
+        stream_downsampled = reshape(decoded_data, second_downsample_rate, length(decoded_data) / second_downsample_rate);
         % attemp to correct possible erros.
         decoded_data = round(mean(stream_downsampled(:, :)));
     end
 
-    % downsample.
-    stream_downsampled = reshape(decoded_data, output_data_block_size, length(decoded_data) / output_data_block_size);
+    % down sample by hamming block code length.
+    if enable_block_size_downsample == 1
+        % downsample.
+        stream_downsampled = reshape(decoded_data, output_data_block_size, length(decoded_data) / output_data_block_size);
 
-    % attemp to correct possible erros.
-    decoded_data = round(mean(stream_downsampled(:, :)));
+        % attemp to correct possible erros.
+        decoded_data = round(mean(stream_downsampled(:, :)));
+    end
 
     % send out coded data block.
     out_stream = decoded_data;
