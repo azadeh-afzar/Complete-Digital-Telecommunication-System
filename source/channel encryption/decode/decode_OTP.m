@@ -47,6 +47,13 @@ function out_stream = decode_OTP(key, stream, option)
     % OUTPUT:
     %   out_stream      = out put stream.
 
+    % swap options.
+    temp_opt1 = option(1);
+    temp_opt2 = option(2);
+
+    option(1) = temp_opt2;
+    option(2) = temp_opt1;
+
     % use generic function.
     out_stream = OTP(key, stream, option);
 
