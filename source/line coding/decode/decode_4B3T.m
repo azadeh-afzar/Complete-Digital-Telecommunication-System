@@ -166,6 +166,6 @@ function bit_stream = decode_4B3T(line_code, amplitude)
 
     % down sampling.
     bit_stream = reshape(bit_stream, 4, length(bit_stream) / 4);
-    bit_stream = bit_stream(1, :);
+    bit_stream = round(mean(bit_stream(:, :)));
 
 end
