@@ -39,7 +39,18 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function bit_stream = decode_4B3T(line_code, amplitude)
+function bit_stream = decode_4B3T(line_code, amplitude, option)
+    % INPUT:
+    %   line_mode       = encode or decode mode switch.
+    %   line_code_name  = name of line coding algorithm.
+    %   stream          = source stream to be line coded.
+    %   amplitude       = magnitude levels for high, zero and low.
+    %   option          = other algorithm specific options.
+    % OUTPUT:
+    %   signal          = line coded stream.
+
+    % get options.
+    enable_downsampling = option(1);
 
     % assign amplitudes.
     high_a = amplitude(1);
@@ -164,8 +175,10 @@ function bit_stream = decode_4B3T(line_code, amplitude)
         bit_stream_index = bit_stream_index + 4;
     end
 
-    % down sampling.
-    bit_stream = reshape(bit_stream, 4, length(bit_stream) / 4);
-    bit_stream = round(mean(bit_stream(:, :)));
+    % down sampling if manually set.
+    if enable_downsampling == 1
+        bit_stream = reshape(bit_stream, 4, length(bit_stream) / 4);
+        bit_stream = round(mean(bit_stream(:, :)));
+    end
 
 end

@@ -39,18 +39,24 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function line_code = encode_4B3T(bit_stream, amplitude)
+function line_code = encode_4B3T(bit_stream, amplitude, option)
     % INPUT:
     %   line_mode       = encode or decode mode switch.
     %   line_code_name  = name of line coding algorithm.
     %   stream          = source stream to be line coded.
     %   amplitude       = magnitude levels for high, zero and low.
+    %   option          = other algorithm specific options.
     % OUTPUT:
     %   signal          = line coded stream.
 
+    % get options.
+    enable_upsampling = option(1);
+
     % to avoid any problems, multiply bits to 4, this reduces 
-    % Rb by 1/4 .
-    bit_stream = repelem(bit_stream, 4);
+    % Rb by 1/4 (although it should manually be set).
+    if enable_upsampling == 1
+        bit_stream = repelem(bit_stream, 4);
+    end
 
     % set accumulated DC offset starting from 1.
     dc_offset = 1;

@@ -39,12 +39,13 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function signal = line_coding(line_mode, line_code_name, stream, amplitude)
+function signal = line_coding(line_mode, line_code_name, stream, amplitude, option)
     % INPUT:
     %   line_mode       = encode or decode mode switch.
     %   line_code_name  = name of line coding algorithm.
     %   stream          = source stream to be line coded.
     %   amplitude       = magnitude levels for high, zero and low.
+    %   option          = other algorithm specific options.
     % OUTPUT:
     %   signal          = line coded stream.
 
@@ -53,9 +54,9 @@ function signal = line_coding(line_mode, line_code_name, stream, amplitude)
 
     switch line_mode
         case 'encode'
-            signal = line_encode(line_code_name, stream, amplitude);
+            signal = line_encode(line_code_name, stream, amplitude, option);
         case 'decode'
-            signal = line_decode(line_code_name, stream, amplitude);
+            signal = line_decode(line_code_name, stream, amplitude, option);
         otherwise
             fprintf('\n');
             warning(['"', line_mode, '" mode is not supported! ONLY "encode" and "decode" are supported.']);

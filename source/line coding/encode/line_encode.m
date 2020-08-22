@@ -39,17 +39,18 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-function line_code = line_encode(line_code_name, bit_stream, amplitude)
+function line_code = line_encode(line_code_name, bit_stream, amplitude, option)
     % INPUT:
     %   line_code_name  = name of line coding algorithm.
     %   bit_stream      = source stream to be line coded.
     %   amplitude       = magnitude levels for high, zero and low.
+    %   option          = other algorithm specific options.
     % OUTPUT:
     %   signal          = line coded stream.
 
     switch line_code_name
         case '4B3T'
-            line_code = encode_4B3T(bit_stream, amplitude);
+            line_code = encode_4B3T(bit_stream, amplitude, option);
         otherwise
             fprintf('\n');
             warning(['"', line_code_name, '" Line code is not supported! ONLY "4B3T" are supported.']);
