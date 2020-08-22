@@ -58,6 +58,8 @@ function out_stream = encode_hamming(stream, option)
     % upsample by hamming block size to avoid unmatched lengths.
     if enable_block_size_upsample > 0
         stream_upsampled = repelem(stream, input_data_block_size);
+    else
+        stream_upsampled = stream;
     end
 
     % manually upsample stream or not.

@@ -1,4 +1,4 @@
-% test/source/util/test_plotspec.m
+% source/digi_telecom_system.m
 %
 % This file is a part of:
 % Azadeh Afzar - Complete Digital Telecommunication System.
@@ -39,11 +39,25 @@
 % 3. This notice may not be removed or altered from any source distribution.
 %
 
-addpath(genpath('../../../source'));
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                           "Setup MATLAB"                            %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-fs = 1;
-ts = 1 / fs;
-t = 1:ts:100;
-f = 20;
-s = cos(2 * pi * f * t);
-plotspec(s, ts, 1, [1, 1, 1]);
+% clear memory and screen.
+clc, clear, close all; 
+
+% add project's source to matlab file path.
+addpath(genpath('../source'));
+
+% define global variables.
+DATA_DIR_PATH = '../asset/language references/English';
+DATABASE_FILE_PATH = '../database/English.mat';
+TEXT_DATA_FILE = '../asset/text data/input.txt';
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                      "Reading Text Data File"                       %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% get source encoding data.
+source_encoding(DATA_DIR_PATH, DATABASE_FILE_PATH);
